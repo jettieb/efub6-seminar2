@@ -4,6 +4,7 @@ import com.efub.seminar2.global.exception.CustomException;
 import com.efub.seminar2.global.exception.ErrorCode;
 import com.efub.seminar2.member.domain.Member;
 import com.efub.seminar2.member.dto.request.CreateMemberRequest;
+import com.efub.seminar2.member.dto.request.UpdateMemberRequest;
 import com.efub.seminar2.member.dto.response.MemberResponse;
 import com.efub.seminar2.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,4 +38,20 @@ public class MemberService {
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         memberRepository.delete(member);
     }
+
+    @Transactional
+    public MemberResponse updateNickname(Long memberId, UpdateMemberRequest request) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        member.updateMember(request.getNickname(), request.getBio());
+        return MemberResponse.fromMemberEntity(member);
+    }
+
+    @Transactional
+    public void deactivateMember(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        member.deactivate();
+    }
+
 }

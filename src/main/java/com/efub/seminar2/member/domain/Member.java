@@ -35,6 +35,9 @@ public class Member {
     @Column(nullable = false)
     private String bio;
 
+    @Column(nullable = false)
+    private boolean isActive = true;
+
     @Builder
     public Member(String email, String password, String nickname, String studentId, String university, String bio) {
         this.email = email;
@@ -43,5 +46,15 @@ public class Member {
         this.university = university;
         this.studentId = studentId;
         this.bio = bio;
+        this.isActive = true;
+    }
+
+    public void updateMember(String nickname, String bio) {
+        this.nickname = nickname;
+        this.bio = bio;
+    }
+
+    public void deactivate() {
+        this.isActive = false;
     }
 }

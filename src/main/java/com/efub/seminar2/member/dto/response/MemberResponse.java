@@ -1,12 +1,12 @@
 package com.efub.seminar2.member.dto.response;
 
 import com.efub.seminar2.member.domain.Member;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Builder
 public class MemberResponse {
     private final Long memberId;
@@ -14,6 +14,7 @@ public class MemberResponse {
     private final String nickname;
     private final String university;
     private final String bio;
+    private boolean isActive;
 
     public static MemberResponse fromMemberEntity(Member member){
         return MemberResponse.builder()
@@ -22,6 +23,7 @@ public class MemberResponse {
                 .memberId(member.getMemberId())
                 .university(member.getUniversity())
                 .bio(member.getBio())
+                .isActive(member.isActive())
                 .build();
     }
 }

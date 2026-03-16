@@ -1,6 +1,7 @@
 package com.efub.seminar2.member.controller;
 
 import com.efub.seminar2.member.dto.request.CreateMemberRequest;
+import com.efub.seminar2.member.dto.request.UpdateMemberRequest;
 import com.efub.seminar2.member.dto.response.MemberResponse;
 import com.efub.seminar2.member.service.MemberService;
 import jakarta.validation.Valid;
@@ -32,5 +33,18 @@ public class MemberController {
     public ResponseEntity<Void> deleteMember(@PathVariable Long memberId){
         memberService.deleteMember(memberId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PatchMapping("/{memberId}")
+    public ResponseEntity<MemberResponse> updateNickname(@PathVariable Long memberId,
+                                                         @RequestBody @Valid UpdateMemberRequest request) {
+        MemberResponse response = memberService.updateNickname(memberId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PatchMapping("/{memberId}/status")
+    public ResponseEntity<String> deactivateMember(@PathVariable Long memberId) {
+        memberService.deactivateMember(memberId);
+        return ResponseEntity.ok("휴면계정 처리가 완료되었습니다.");
     }
 }
